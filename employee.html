@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Employee Portal - India</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="data-manager.js" defer></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-content">
+            <div class="gov-emblem">🇮🇳</div>
+            <h1>भारत सरकार - Government of India</h1>
+            <h2>Employee Services Portal</h2>
+            <p class="tagline">सभी सरकारी कर्मचारियों के लिए एकीकृत सेवा केंद्र | Integrated Services Hub for Government Employees</p>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Left Sidebar Navigation -->
+        <aside class="sidebar left-sidebar">
+            <nav class="nav-buttons">
+                <button class="nav-btn" onclick="window.open('https://www.indianrailways.gov.in', '_blank')" title="Indian Railways">
+                    <span class="nav-circle">🚂</span>
+                    <span>Railways</span>
+                </button>
+                <button class="nav-btn" onclick="window.open('https://www.sbi.co.in', '_blank')" title="State Bank of India">
+                    <span class="nav-circle">🏦</span>
+                    <span>SBI Bank</span>
+                </button>
+                <button class="nav-btn" onclick="window.open('https://www.iitk.ac.in', '_blank')" title="Higher Education">
+                    <span class="nav-circle">🎓</span>
+                    <span>Education</span>
+                </button>
+                <button class="nav-btn" onclick="window.open('https://cghealth.nic.in', '_blank')" title="Health Services">
+                    <span class="nav-circle">🏥</span>
+                    <span>Health</span>
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Center Content Area -->
+        <main class="content-area">
+            <!-- Announcements Section -->
+            <section class="content-section announcements">
+                <div class="section-header">
+                    <h2>📢 आधिकारिक घोषणाएं | Official Announcements</h2>
+                </div>
+                <div class="section-content" id="announcements-container">
+                    <!-- Content loaded dynamically from localStorage -->
+                </div>
+            </section>
+
+            <!-- Circulars Section -->
+            <section class="content-section circulars">
+                <div class="section-header">
+                    <h2>📋 आदेश और परिपत्र | Orders & Circulars</h2>
+                </div>
+                <div class="section-content" id="circulars-container">
+                    <!-- Content loaded dynamically from localStorage -->
+                </div>
+            </section>
+
+            <!-- Recent Events Section -->
+            <section class="content-section recent-events">
+                <div class="section-header">
+                    <h2>📅 आने वाले कार्यक्रम | Upcoming Events</h2>
+                </div>
+                <div class="section-content" id="events-container">
+                    <!-- Content loaded dynamically from localStorage -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Right Sidebar Navigation -->
+        <aside class="sidebar right-sidebar">
+            <nav class="nav-buttons">
+                <button class="nav-btn" onclick="window.open('https://www.nso.gov.in', '_blank')" title="National Statistics">
+                    <span class="nav-circle">📊</span>
+                    <span>Statistics</span>
+                </button>
+                <button class="nav-btn" onclick="window.open('https://indianpost.gov.in', '_blank')" title="India Post">
+                    <span class="nav-circle">📮</span>
+                    <span>Posts</span>
+                </button>
+                <button class="nav-btn" onclick="window.open('https://meity.gov.in', '_blank')" title="Ministry of IT">
+                    <span class="nav-circle">💻</span>
+                    <span>IT Ministry</span>
+                </button>
+                <button class="nav-btn" onclick="window.open('https://cghealth.nic.in', '_blank')" title="RTGS Services">
+                    <span class="nav-circle">💼</span>
+                    <span>RTGS</span>
+                </button>
+            </nav>
+        </aside>
+    </div>
+
+    <!-- Footer Section with Disclaimers -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>सरकारी पोर्टल | Government Portals</h3>
+                <ul>
+                    <li><a href="https://www.gov.in" target="_blank">National Portal (gov.in)</a></li>
+                    <li><a href="https://www.indiabudget.gov.in" target="_blank">India Budget</a></li>
+                    <li><a href="https://www.pib.gov.in" target="_blank">Press Information Bureau</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>नीतियाँ | Policies</h3>
+                <ul>
+                    <li><a href="https://dopt.gov.in" target="_blank">Department of Personnel (DoPT)</a></li>
+                    <li><a href="https://www.meity.gov.in" target="_blank">Information Security Policy</a></li>
+                    <li><a href="https://www.india.gov.in/" target="_blank">CMS Acceptable Use Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>महत्वपूर्ण सूचनाएं | Important Links</h3>
+                <ul>
+                    <li><a href="https://www.csc.gov.in" target="_blank">Common Service Centres</a></li>
+                    <li><a href="https://www.rtionline.gov.in" target="_blank">RTI Online</a></li>
+                    <li><a href="https://www.bgmea.gov.in" target="_blank">e-Governance Services</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="disclaimer">
+            <p><strong>अस्वीकरण | Disclaimer:</strong> यह पोर्टल केवल भारत सरकार के अधिकृत कर्मचारियों के लिए है। अनधिकृत पहुंच निषिद्ध है। सभी गतिविधियों की निगरानी सुरक्षा उद्देश्यों के लिए की जाती है। इस पोर्टल तक पहुंचकर, आप सभी सरकारी नीतियों और दिशानिर्देशों का पालन करने के लिए सहमत हैं। | This portal is exclusively for authorized Government of India employees. Unauthorized access is strictly prohibited. All activities are monitored for security purposes. By accessing this portal, you agree to comply with all Government policies and guidelines.</p>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 भारत सरकार | Government of India. सर्वाधिकार सुरक्षित | All rights reserved. | Last Updated: June 22, 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        // Load content when page loads
+        window.addEventListener('load', function() {
+            loadEmployeeContent();
+        });
+
+        function loadEmployeeContent() {
+            // Load announcements
+            const announcements = DataManager.getAnnouncements();
+            const announcementsHtml = announcements.map(item => `
+                <div class="announcement-item">
+                    <h3>${item.title}</h3>
+                    <p class="date">Posted on: ${item.date}</p>
+                    <p>${item.content}</p>
+                </div>
+            `).join('');
+            document.getElementById('announcements-container').innerHTML = announcementsHtml || '<p style="color: #999;">No announcements at this time.</p>';
+
+            // Load circulars
+            const circulars = DataManager.getCirculars();
+            const circularsHtml = circulars.map(item => `
+                <div class="circular-item">
+                    <h3>${item.title}</h3>
+                    <p class="date">Issued: ${item.date} | ${item.reference}</p>
+                    <p>${item.content}</p>
+                    <a href="${item.link}" class="read-more" target="_blank">Read More →</a>
+                </div>
+            `).join('');
+            document.getElementById('circulars-container').innerHTML = circularsHtml || '<p style="color: #999;">No circulars at this time.</p>';
+
+            // Load events
+            const events = DataManager.getEvents();
+            const eventsHtml = events.map(item => `
+                <div class="event-item">
+                    <div class="event-date">
+                        <span class="day">${item.day}</span>
+                        <span class="month">${item.month}</span>
+                    </div>
+                    <div class="event-details">
+                        <h3>${item.title}</h3>
+                        <p class="time">${item.time}</p>
+                        <p class="location">${item.location}</p>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('events-container').innerHTML = eventsHtml || '<p style="color: #999;">No upcoming events at this time.</p>';
+        }
+
+        // Reload content every 5 seconds to check for updates from editor
+        setInterval(loadEmployeeContent, 5000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Editor - Government Employee Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="data-manager.js" defer></script>
+    <style>
+        .editor-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            background-color: #f9f9f9;
+        }
+
+        .editor-header {
+            background: #003d7a;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .editor-header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .editor-header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+        }
+
+        .editor-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .editor-nav button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            background-color: white;
+            color: #333;
+            border: 2px solid #003d7a;
+            transition: all 0.3s ease;
+        }
+
+        .editor-nav button.active {
+            background-color: #003d7a;
+            color: white;
+        }
+
+        .editor-nav button:hover {
+            background-color: #e8f0ff;
+        }
+
+        .section-editor {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .section-editor.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #003d7a;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #003d7a;
+            box-shadow: 0 0 0 3px rgba(0, 61, 122, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .button-group button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .btn-save {
+            background-color: #003d7a;
+            color: white;
+        }
+
+        .btn-save:hover {
+            background-color: #001a4d;
+        }
+
+        .btn-cancel {
+            background-color: #ddd;
+            color: #333;
+        }
+
+        .btn-cancel:hover {
+            background-color: #ccc;
+        }
+
+        .btn-delete {
+            background-color: #d32f2f;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background-color: #b71c1c;
+        }
+
+        .btn-add {
+            background-color: #388e3c;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .btn-add:hover {
+            background-color: #2e7d32;
+        }
+
+        .item-list {
+            margin-bottom: 30px;
+        }
+
+        .item-card {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-left: 4px solid #003d7a;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .item-info h3 {
+            margin: 0 0 5px 0;
+            color: #003d7a;
+        }
+
+        .item-info p {
+            margin: 5px 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .item-actions button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .btn-edit {
+            background-color: #1976d2;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background-color: #1565c0;
+        }
+
+        .btn-delete-item {
+            background-color: #d32f2f;
+            color: white;
+        }
+
+        .btn-delete-item:hover {
+            background-color: #b71c1c;
+        }
+
+        .form-container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .form-container.show {
+            display: block;
+        }
+
+        .success-message {
+            background-color: #c8e6c9;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .back-link a {
+            color: #003d7a;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        .info-box {
+            background-color: #e3f2fd;
+            border-left: 4px solid #003d7a;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .info-box p {
+            margin: 0;
+            color: #003d7a;
+        }
+
+        @media (max-width: 768px) {
+            .item-card {
+                flex-direction: column;
+            }
+
+            .item-actions {
+                margin-top: 10px;
+                width: 100%;
+            }
+
+            .item-actions button {
+                flex: 1;
+            }
+
+            .editor-nav {
+                flex-direction: column;
+            }
+
+            .editor-nav button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="editor-container">
+        <div class="back-link">
+            <a href="employee.html">← Back to Portal</a>
+        </div>
+
+        <div class="editor-header">
+            <h1>📝 Portal Content Editor</h1>
+            <p>Manage announcements, circulars, and events</p>
+        </div>
+
+        <div class="info-box">
+            <p>✓ Changes are saved automatically and will appear on the main portal within seconds</p>
+        </div>
+
+        <div class="editor-nav">
+            <button class="active" onclick="switchSection('announcements')">📢 Announcements</button>
+            <button onclick="switchSection('circulars')">📋 Circulars</button>
+            <button onclick="switchSection('events')">📅 Events</button>
+            <button onclick="resetCurrentTab()" style="margin-left: auto; background-color: #fff3cd; border-color: #ff6b6b; color: #333;">🔄 Reset This Tab</button>
+        </div>
+
+        <!-- Announcements Section -->
+        <div id="announcements" class="section-editor active">
+            <div class="success-message" id="success-announcements">✓ Announcement saved successfully!</div>
+            <button class="btn-add" onclick="showAddForm('announcement')">+ Add New Announcement</button>
+            
+            <div class="form-container" id="form-add-announcement">
+                <h3>Add New Announcement</h3>
+                <div class="form-group">
+                    <label>Title (Hindi/English)</label>
+                    <input type="text" id="ann-title" placeholder="e.g., नई सेवा लॉन्च | New Service Launch">
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" id="ann-date" placeholder="e.g., June 22, 2026">
+                </div>
+                <div class="form-group">
+                    <label>Content (Hindi/English)</label>
+                    <textarea id="ann-content" placeholder="Announcement content..."></textarea>
+                </div>
+                <div class="button-group">
+                    <button class="btn-save" onclick="saveAnnouncement()">Save Announcement</button>
+                    <button class="btn-cancel" onclick="hideAddForm('announcement')">Cancel</button>
+                </div>
+            </div>
+
+            <div class="item-list" id="announcements-list"></div>
+        </div>
+
+        <!-- Circulars Section -->
+        <div id="circulars" class="section-editor">
+            <div class="success-message" id="success-circulars">✓ Circular saved successfully!</div>
+            <button class="btn-add" onclick="showAddForm('circular')">+ Add New Circular</button>
+            
+            <div class="form-container" id="form-add-circular">
+                <h3>Add New Circular</h3>
+                <div class="form-group">
+                    <label>Title (Hindi/English)</label>
+                    <input type="text" id="circ-title" placeholder="e.g., संशोधित नीति | Modified Policy">
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" id="circ-date" placeholder="e.g., June 15, 2026">
+                </div>
+                <div class="form-group">
+                    <label>Reference Number</label>
+                    <input type="text" id="circ-ref" placeholder="e.g., आदेश संख्या: F/15-2026">
+                </div>
+                <div class="form-group">
+                    <label>Content (Hindi/English)</label>
+                    <textarea id="circ-content" placeholder="Circular content..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Link (Optional)</label>
+                    <input type="text" id="circ-link" placeholder="e.g., https://example.com">
+                </div>
+                <div class="button-group">
+                    <button class="btn-save" onclick="saveCircular()">Save Circular</button>
+                    <button class="btn-cancel" onclick="hideAddForm('circular')">Cancel</button>
+                </div>
+            </div>
+
+            <div class="item-list" id="circulars-list"></div>
+        </div>
+
+        <!-- Events Section -->
+        <div id="events" class="section-editor">
+            <div class="success-message" id="success-events">✓ Event saved successfully!</div>
+            <button class="btn-add" onclick="showAddForm('event')">+ Add New Event</button>
+            
+            <div class="form-container" id="form-add-event">
+                <h3>Add New Event</h3>
+                <div class="form-group">
+                    <label>Event Title (Hindi/English)</label>
+                    <input type="text" id="evt-title" placeholder="e.g., कर्मचारी कल्याण कार्यक्रम | Employee Welfare">
+                </div>
+                <div class="form-group">
+                    <label>Date - Day</label>
+                    <input type="text" id="evt-day" placeholder="e.g., 26" maxlength="2">
+                </div>
+                <div class="form-group">
+                    <label>Date - Month</label>
+                    <input type="text" id="evt-month" placeholder="e.g., JUL" maxlength="3">
+                </div>
+                <div class="form-group">
+                    <label>Time</label>
+                    <input type="text" id="evt-time" placeholder="e.g., 10:00 AM - 1:00 PM">
+                </div>
+                <div class="form-group">
+                    <label>Location (Hindi/English)</label>
+                    <input type="text" id="evt-location" placeholder="e.g., सरकारी सभागार | Government Auditorium">
+                </div>
+                <div class="button-group">
+                    <button class="btn-save" onclick="saveEvent()">Save Event</button>
+                    <button class="btn-cancel" onclick="hideAddForm('event')">Cancel</button>
+                </div>
+            </div>
+
+            <div class="item-list" id="events-list"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentEditIndex = -1;
+        let currentEditType = '';
+        let activeTab = 'announcements';
+
+        // Load data on page load
+        window.addEventListener('load', function() {
+            loadAnnouncements();
+            loadCirculars();
+            loadEvents();
+        });
+
+        // Switch between sections
+        function switchSection(section) {
+            activeTab = section;
+            document.querySelectorAll('.section-editor').forEach(el => el.classList.remove('active'));
+            document.getElementById(section).classList.add('active');
+
+            document.querySelectorAll('.editor-nav button').forEach((btn, index) => {
+                btn.classList.remove('active');
+                if (index < 3 && ['announcements', 'circulars', 'events'][index] === section) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Show/hide form
+        function showAddForm(type) {
+            document.getElementById(`form-add-${type}`).classList.add('show');
+            currentEditIndex = -1;
+            currentEditType = type;
+        }
+
+        function hideAddForm(type) {
+            document.getElementById(`form-add-${type}`).classList.remove('show');
+            clearForm(type);
+        }
+
+        function clearForm(type) {
+            if (type === 'announcement') {
+                document.getElementById('ann-title').value = '';
+                document.getElementById('ann-date').value = '';
+                document.getElementById('ann-content').value = '';
+            } else if (type === 'circular') {
+                document.getElementById('circ-title').value = '';
+                document.getElementById('circ-date').value = '';
+                document.getElementById('circ-ref').value = '';
+                document.getElementById('circ-content').value = '';
+                document.getElementById('circ-link').value = '';
+            } else if (type === 'event') {
+                document.getElementById('evt-title').value = '';
+                document.getElementById('evt-day').value = '';
+                document.getElementById('evt-month').value = '';
+                document.getElementById('evt-time').value = '';
+                document.getElementById('evt-location').value = '';
+            }
+        }
+
+        // Load announcements
+        function loadAnnouncements() {
+            const announcements = DataManager.getAnnouncements();
+            const html = announcements.map((item, index) => `
+                <div class="item-card">
+                    <div class="item-info">
+                        <h3>${item.title}</h3>
+                        <p>📅 ${item.date}</p>
+                        <p>${item.content.substring(0, 100)}...</p>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-edit" onclick="editAnnouncement(${index})">Edit</button>
+                        <button class="btn-delete-item" onclick="deleteAnnouncement(${index})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('announcements-list').innerHTML = html || '<p style="color: #999;">No announcements. Click "Add New Announcement" to create one.</p>';
+        }
+
+        // Save announcement
+        function saveAnnouncement() {
+            const title = document.getElementById('ann-title').value;
+            const date = document.getElementById('ann-date').value;
+            const content = document.getElementById('ann-content').value;
+
+            if (!title || !date || !content) {
+                alert('Please fill all fields');
+                return;
+            }
+
+            if (currentEditIndex >= 0) {
+                DataManager.updateAnnouncement(currentEditIndex, { title, date, content });
+            } else {
+                DataManager.addAnnouncement({ title, date, content });
+            }
+
+            clearForm('announcement');
+            hideAddForm('announcement');
+            loadAnnouncements();
+            showSuccess('announcements');
+        }
+
+        // Edit announcement
+        function editAnnouncement(index) {
+            const announcements = DataManager.getAnnouncements();
+            const item = announcements[index];
+            document.getElementById('ann-title').value = item.title;
+            document.getElementById('ann-date').value = item.date;
+            document.getElementById('ann-content').value = item.content;
+            currentEditIndex = index;
+            showAddForm('announcement');
+        }
+
+        // Delete announcement
+        function deleteAnnouncement(index) {
+            if (confirm('Delete this announcement?')) {
+                DataManager.deleteAnnouncement(index);
+                loadAnnouncements();
+                showSuccess('announcements');
+            }
+        }
+
+        // Load circulars
+        function loadCirculars() {
+            const circulars = DataManager.getCirculars();
+            const html = circulars.map((item, index) => `
+                <div class="item-card">
+                    <div class="item-info">
+                        <h3>${item.title}</h3>
+                        <p>📅 ${item.date} | ${item.reference}</p>
+                        <p>${item.content.substring(0, 100)}...</p>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-edit" onclick="editCircular(${index})">Edit</button>
+                        <button class="btn-delete-item" onclick="deleteCircular(${index})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('circulars-list').innerHTML = html || '<p style="color: #999;">No circulars. Click "Add New Circular" to create one.</p>';
+        }
+
+        // Save circular
+        function saveCircular() {
+            const title = document.getElementById('circ-title').value;
+            const date = document.getElementById('circ-date').value;
+            const reference = document.getElementById('circ-ref').value;
+            const content = document.getElementById('circ-content').value;
+            const link = document.getElementById('circ-link').value || '#';
+
+            if (!title || !date || !reference || !content) {
+                alert('Please fill all required fields');
+                return;
+            }
+
+            if (currentEditIndex >= 0) {
+                DataManager.updateCircular(currentEditIndex, { title, date, reference, content, link });
+            } else {
+                DataManager.addCircular({ title, date, reference, content, link });
+            }
+
+            clearForm('circular');
+            hideAddForm('circular');
+            loadCirculars();
+            showSuccess('circulars');
+        }
+
+        // Edit circular
+        function editCircular(index) {
+            const circulars = DataManager.getCirculars();
+            const item = circulars[index];
+            document.getElementById('circ-title').value = item.title;
+            document.getElementById('circ-date').value = item.date;
+            document.getElementById('circ-ref').value = item.reference;
+            document.getElementById('circ-content').value = item.content;
+            document.getElementById('circ-link').value = item.link;
+            currentEditIndex = index;
+            showAddForm('circular');
+        }
+
+        // Delete circular
+        function deleteCircular(index) {
+            if (confirm('Delete this circular?')) {
+                DataManager.deleteCircular(index);
+                loadCirculars();
+                showSuccess('circulars');
+            }
+        }
+
+        // Load events
+        function loadEvents() {
+            const events = DataManager.getEvents();
+            const html = events.map((item, index) => `
+                <div class="item-card">
+                    <div class="item-info">
+                        <h3>${item.title}</h3>
+                        <p>📅 ${item.day} ${item.month} | ⏰ ${item.time}</p>
+                        <p>📍 ${item.location}</p>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-edit" onclick="editEvent(${index})">Edit</button>
+                        <button class="btn-delete-item" onclick="deleteEvent(${index})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('events-list').innerHTML = html || '<p style="color: #999;">No events. Click "Add New Event" to create one.</p>';
+        }
+
+        // Save event
+        function saveEvent() {
+            const title = document.getElementById('evt-title').value;
+            const day = document.getElementById('evt-day').value;
+            const month = document.getElementById('evt-month').value;
+            const time = document.getElementById('evt-time').value;
+            const location = document.getElementById('evt-location').value;
+
+            if (!title || !day || !month || !time || !location) {
+                alert('Please fill all fields');
+                return;
+            }
+
+            if (currentEditIndex >= 0) {
+                DataManager.updateEvent(currentEditIndex, { title, day, month, time, location });
+            } else {
+                DataManager.addEvent({ title, day, month, time, location });
+            }
+
+            clearForm('event');
+            hideAddForm('event');
+            loadEvents();
+            showSuccess('events');
+        }
+
+        // Edit event
+        function editEvent(index) {
+            const events = DataManager.getEvents();
+            const item = events[index];
+            document.getElementById('evt-title').value = item.title;
+            document.getElementById('evt-day').value = item.day;
+            document.getElementById('evt-month').value = item.month;
+            document.getElementById('evt-time').value = item.time;
+            document.getElementById('evt-location').value = item.location;
+            currentEditIndex = index;
+            showAddForm('event');
+        }
+
+        // Delete event
+        function deleteEvent(index) {
+            if (confirm('Delete this event?')) {
+                DataManager.deleteEvent(index);
+                loadEvents();
+                showSuccess('events');
+            }
+        }
+
+        // Show success message
+        function showSuccess(type) {
+            const msg = document.getElementById(`success-${type}`);
+            msg.classList.add('show');
+            setTimeout(() => msg.classList.remove('show'), 3000);
+        }
+
+        // Reset current tab
+        function resetCurrentTab() {
+            let tabName = '';
+            let confirmMessage = '';
+
+            if (activeTab === 'announcements') {
+                tabName = 'Announcements';
+                confirmMessage = 'Are you sure you want to reset all announcements to default values? This cannot be undone.';
+            } else if (activeTab === 'circulars') {
+                tabName = 'Circulars';
+                confirmMessage = 'Are you sure you want to reset all circulars to default values? This cannot be undone.';
+            } else if (activeTab === 'events') {
+                tabName = 'Events';
+                confirmMessage = 'Are you sure you want to reset all events to default values? This cannot be undone.';
+            }
+
+            if (confirm(confirmMessage)) {
+                if (activeTab === 'announcements') {
+                    localStorage.removeItem(DataManager.STORAGE_KEY_ANNOUNCEMENTS);
+                    DataManager.init();
+                    loadAnnouncements();
+                } else if (activeTab === 'circulars') {
+                    localStorage.removeItem(DataManager.STORAGE_KEY_CIRCULARS);
+                    DataManager.init();
+                    loadCirculars();
+                } else if (activeTab === 'events') {
+                    localStorage.removeItem(DataManager.STORAGE_KEY_EVENTS);
+                    DataManager.init();
+                    loadEvents();
+                }
+                alert(`${tabName} have been reset to defaults!`);
+            }
+        }
+    </script>
+</body>
+</html>
